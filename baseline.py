@@ -19,6 +19,7 @@ testDataPath = ""
 solutionPath = ""
 # Path to directory where GloVe file is saved.
 gloveDir = ""
+glovePath = ""
 
 NUM_FOLDS = None                   # Value of K in K-fold Cross Validation
 NUM_CLASSES = None                 # Number of classes - Happy, Sad, Angry, Others
@@ -184,7 +185,8 @@ def getEmbeddingMatrix(wordIndex):
     """
     embeddingsIndex = {}
     # Load the embedding vectors from ther GloVe file
-    with io.open(os.path.join(gloveDir, 'glove.6B.100d.txt'), encoding="utf8") as f:
+    #with io.open(os.path.join(gloveDir, 'glove.6B.100d.txt'), encoding="utf8") as f:
+    with io.open(glovePath, encoding="utf8") as f:
         for line in f:
             values = line.split()
             word = values[0]
@@ -236,7 +238,7 @@ def main():
     with open(args.config) as configfile:
         config = json.load(configfile)
         
-    global trainDataPath, testDataPath, solutionPath, gloveDir
+    global trainDataPath, testDataPath, solutionPath, gloveDir, glovePath
     global NUM_FOLDS, NUM_CLASSES, MAX_NB_WORDS, MAX_SEQUENCE_LENGTH, EMBEDDING_DIM
     global BATCH_SIZE, LSTM_DIM, DROPOUT, NUM_EPOCHS, LEARNING_RATE    
     
@@ -244,6 +246,8 @@ def main():
     testDataPath = config["test_data_path"]
     solutionPath = config["solution_path"]
     gloveDir = config["glove_dir"]
+    glovePath = config["glove_path"]
+    
     
     NUM_FOLDS = config["num_folds"]
     NUM_CLASSES = config["num_classes"]
